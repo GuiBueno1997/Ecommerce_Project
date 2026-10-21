@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
-ROOT_URLCONF = 'store.urls'
+ROOT_URLCONF = 'loja.urls'
 
 TEMPLATES = [
     {
@@ -78,7 +78,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'store.wsgi.application'
+WSGI_APPLICATION = 'loja.wsgi.application'
 
 
 # Database
