@@ -7,6 +7,8 @@ from . import models
 class ListaProdutos(ListView):
     model = models.Produto
     template_name = 'produto/lista.html'
+    context_object_name = 'produtos'
+    paginate_by = 2
 class DetalheProduto(View):
     def get(self, *args, **kwargs):
         return HttpResponse('Detalhe do produto')
