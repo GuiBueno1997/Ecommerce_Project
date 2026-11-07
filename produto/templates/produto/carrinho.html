@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load omfilters %}
+{% load static%}
 
 {% block conteudo %}
 
@@ -19,22 +21,39 @@
                             <th>Total</th>
                         </tr>
 
-
+                        {% for variacao_id, linha in carrinho.items %}
                         <tr>
                             <td class="d-none d-lg-block">
-                                <img class="cart-img" src="imgs/7eb9d706-b8e3-48d0-957e-25f4a722f944.jpg">
+                                <img class="cart-img" src="{% get_media_prefix %}{{ linha.imagem }}">
                             </td>
                             <td>
-                                Nome do produto que o cliente está comprando
-                                <a class="ml-3" href="#">
+                                <a href="{% url 'produto:detalhe' linha.slug %}">
+                                    {{linha.produto_nome}}
+                                </a>
+
+                                <a class="ml-3" 
+                                    href="{% url 'produto:removerdocarrinho' %}?vid={{variacao_id}}">
                                     <i class="fas fa-times-circle text-danger" aria-hidden="true"></i>
                                 </a>
                             </td>
-                            <td>Variação</td>
-                            <td>2x</td>
-                            <td>R$ 10500,59</td>
-                        </tr>
+                            <td>{{linha.variacao_nome}}</td>
+                            <td>
+                                {{linha.quantidade}}x
+                                {% if linha.preco_unitario_promocional%}
+                                {{ linha.preco_unitario_promocional | formata_preco }}
+                                {%else%}
+                                {{ linha.preco_unitario | formata_preco }}
+                                {% endif %}
+                            
+                            </td>
 
+                            {% if linha.preco_quantitativo_promocional %}
+                            <td>{{linha.preco_quantitativo_promocional | formata_preco}}</td>
+                            {% else %}
+                            <td>{{linha.preco_quantitativo}}</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
 
                     </table>
                 </div>
