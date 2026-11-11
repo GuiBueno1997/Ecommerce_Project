@@ -7,15 +7,37 @@
 <div class="row">
 
     {% if not request.user.is_authenticated %}
-    <div class="col-lg">
-        <h1>Login</h1>
+    <div class="col-lg mt-3">
+        <h4>Login</h4>
+        <p>Sign in with your email address and password:</p>
+
+        <form method="POST" action="{% url 'perfil:login' %}">
+            {% csrf_token %}
+        <div class="form-group">
+            <label for="InputUsuario1">User</label>
+            <input type="text" name='username' id="InputUsuario1" class="form-control" aria-describedby="Tap your User">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password:</label>
+            <input name='password' type="password" class="form-control" id="exampleInputPassword1">
+            <placeholder="Tap your Password">
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Enter</button>
+        </form>
+
+
+
+        
     </div>
     {% endif %}
 
-    <div class="col-lg">
+    <div class="col-lg mt-3">
 
         {% block titulocadastro %}
-        <h1>Cadastro</h1>
+        <h4>Cadastro</h4>
+        <p>Sign up with your email address and password:</p>
         {% endblock titulocadastro %}
 
         <form method="POST" action="">
