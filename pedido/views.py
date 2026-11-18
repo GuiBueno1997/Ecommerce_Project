@@ -8,12 +8,24 @@ from utils import utils
 from .models import Pedido, ItemPedido
 from django.urls import reverse
 
+class DispatchLoginRequiredMixin:
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('perfil:criar')
 
-class Pagar(DetailView):
-    template_name='pedido/pagar.html'
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(usuario=self.request.user)
+    
+class Pagar(DispatchLoginRequiredMixin, DetailView):
+    template_name = 'pedido/pagar.html'
     model = Pedido
     pk_url_kwarg = 'pk'
-    context_objeto_name = 'pedido'
+    context_object_name = 'pedido'
+
+    
 
 class SalvarPedido(View):
 
@@ -100,10 +112,16 @@ class SalvarPedido(View):
             )
         )
 
-class Detalhe(View):
-    def get(self, *args, **kwargs):
-        return HttpResponse('Detalhe')
+class Detalhe(DispatchLoginRequiredMixin, DetailView):
+    template_name = 'pedido/detalhe.html'
+    model = Pedido
+    pk_url_kwarg = 'pk'
+    context_object_name = 'pedido'
+    
 
-class Lista(View):
-    def get(self, *args, **kwargs):
-        return HttpResponse('Lista')
+class Lista(DispatchLoginRequiredMixin, ListView):
+    model = Pedido
+    context_object_name = 'pedidos'
+    template_name = 'pedido/lista.html'
+    paginate_by = 10
+    ordering = ['-id']
