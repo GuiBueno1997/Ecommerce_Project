@@ -1,5 +1,9 @@
-{% extends "base.html" %} {% load omfilters %} {% load static %} {% block
-conteudo %}
+{% extends "base.html" %} 
+
+{% block title %}Payment | {% endblock title %}
+{% load omfilters %} 
+{% load static %} 
+{% block conteudo %}
 <div class="row">
   <div class="col">
     <h3>Escolha o método de pagamento</h3>
@@ -14,4 +18,4 @@ conteudo %}
     <a href="#" class="btn btn-primary btn-block btn-lg">Pagar</a>
   </div>
 </div>
-{% endblock conteudo %}
+{% endblock %}
